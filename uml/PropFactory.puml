@@ -1,0 +1,64 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+interface PropFactory{
+    + {abstract} createBaseProps(int locationX, int locationY, int speedX, int speedY):AbstractProp
+}
+
+class HpSupplyFactory{
+    + createBaseProps(int locationX, int locationY, int speedX, int speedY):AbstractProp
+}
+
+class FireSupplyFactory{
+    + createBaseProps(int locationX, int locationY, int speedX, int speedY):AbstractProp
+}
+
+class FirePlusSupplyFactory{
+    + createBaseProps(int locationX, int locationY, int speedX, int speedY):AbstractProp
+}
+
+class BombSupplyFactory{
+    + createBaseProps(int locationX, int locationY, int speedX, int speedY):AbstractProp
+}
+
+PropFactory <|.. HpSupplyFactory
+PropFactory <|.. FireSupplyFactory
+PropFactory <|.. FirePlusSupplyFactory
+PropFactory <|.. BombSupplyFactory
+
+
+abstract class AbstractProp
+{
+    + AbstractProp(int locationX, int locationY, int speedX, int speedY)
+    + {abstract} activate():void
+}
+
+PropFactory ..> AbstractProp
+
+class HpSupply{
+    - hpIncrease:int = 66
+    + HpSupply(int locationX, int locationY, int speedX, int speedY)
+    + activate():void
+}
+
+class FireSupply{
+    + FireSupply(int locationX, int locationY, int speedX, int speedY)
+    + activate():void
+}
+
+class FirePlusSupply{
+    + FirePlusSupply(int locationX, int locationY, int speedX, int speedY)
+    + activate(HeroAircraft hero, Game game):void
+}
+
+class BombSupply{
+    + BombSupply(int locationX, int locationY, int speedX, int speedY)
+    + activate(HeroAircraft hero, Game game):void
+}
+
+AbstractProp <|-- HpSupply
+AbstractProp <|-- FireSupply
+AbstractProp <|-- FirePlusSupply
+AbstractProp <|-- BombSupply
+
+@enduml

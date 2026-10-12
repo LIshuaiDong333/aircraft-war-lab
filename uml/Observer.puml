@@ -1,0 +1,65 @@
+@startuml
+' https://plantuml.com/class-diagram
+
+' 观察者接口
+interface Observer {
+    + {abstract} update(): int
+}
+
+' 发布者
+class BombPublisher {
+    - observers: List<Observer>
+    + addObserver(Observer observer): void
+    + removeObserver(Observer observer): void
+    + notifyObservers(): int
+}
+
+BombPublisher o--> Observer
+
+' 客户端
+abstract class GameTemplate {
+    # bombPublisher: BombPublisher
+}
+GameTemplate ..> BombPublisher
+
+' 具体观察者敌机和子弹
+abstract class EnemyAircraft {
+    + update(): int
+}
+Observer <|.. EnemyAircraft
+
+class MobEnemy {
+    + update(): int
+}
+EnemyAircraft <|-- MobEnemy
+
+class EliteEnemy {
+    + update(): int
+}
+EnemyAircraft <|-- EliteEnemy
+
+class SuperEliteEnemy {
+    + update(): int
+}
+EnemyAircraft <|-- SuperEliteEnemy
+
+class BossEnemy {
+    + update(): int
+}
+EnemyAircraft <|-- BossEnemy
+
+class EnemyBullet {
+    + update(): int
+}
+Observer <|.. EnemyBullet
+
+
+' 触发者炸弹道具
+class BombSupply {
+     + activate(): void
+}
+
+' GameTemplate依赖于触发者
+GameTemplate ..> BombSupply : 依赖于炸弹道具的激活,\n在炸弹道具被激活时调用\nbombPublisher.notifyObservers()
+
+@enduml

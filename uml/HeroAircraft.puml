@@ -1,0 +1,15 @@
+@startuml
+class HeroAircraft {
+  - baseStrategy: ShootStrategy
+  - strategyRevertThread: Thread
+  + {static} instance:HeroAircraft
+
+
+  - HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+  + {static} getInstance():HeroAircraft
+  + getBaseStrategy(): ShootStrategy
+  + setTimedShootStrategy(ShootStrategy newStrategy, long durationMs): void
+  + forward():void
+}
+
+@enduml

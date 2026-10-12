@@ -1,0 +1,37 @@
+@startuml
+'https://plantuml.com/class-diagram
+interface ShootStrategy {
+  + doShoot(aircraft: AbstractAircraft): List<BaseBullet>
+}
+
+class DirectShoot {
+  + doShoot(aircraft: AbstractAircraft): List<BaseBullet>
+}
+
+class RingShoot {
+  + doShoot(aircraft: AbstractAircraft): List<BaseBullet>
+}
+
+class ScatterShoot {
+  + doShoot(aircraft: AbstractAircraft): List<BaseBullet>
+}
+
+abstract class AbstractAircraft {
+  - shootStrategy: ShootStrategy
+  - strategyLock: Lock
+  + setShootStrategy(strategy: ShootStrategy): void
+  + getShootStrategy(): ShootStrategy
+  + shoot(): List<BaseBullet>
+}
+
+ShootStrategy <|.. DirectShoot
+ShootStrategy <|.. RingShoot
+ShootStrategy <|.. ScatterShoot
+
+AbstractAircraft o--> ShootStrategy
+
+AbstractAircraft <.. Game
+AbstractAircraft <.. FireSupply
+AbstractAircraft <.. FirePlusSupply
+@enduml
+

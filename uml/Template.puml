@@ -1,0 +1,53 @@
+@startuml
+' https://plantuml.com/class-diagram
+
+abstract class GameTemplate {
+    '部分模板、通用方法
+    + action(): void
+    - timeCountAndNewCycleJudge(): boolean
+    - shootAction(): void
+    - bulletsMoveAction(): void
+    - aircraftsMoveAction(): void
+    - crashCheckAction(): void
+    - postProcessAction(): void
+    - showRankingPanel(): void
+    '钩子/抽象方法
+    # {abstract} setGameParameters(): void
+    # {abstract} spawnEnemies(): void
+    # {abstract} spawnBoss(): void
+    # spawnSuperElite(long currentTime): void
+    # setBackgroundImage(): void
+    # updateDifficulty(): void
+}
+
+class EasyGame {
+    # {abstract} setGameParameters(): void
+    # {abstract} spawnEnemies(): void
+    # {abstract} spawnBoss(): void
+    # setBackgroundImage(): void
+    # updateDifficulty(): void
+    ' (使用 GameTemplate 默认的 spawnSuperElite)
+}
+GameTemplate <|-- EasyGame
+
+class NormalGame {
+    # {abstract} setGameParameters(): void
+    # {abstract} spawnEnemies(): void
+    # {abstract} spawnBoss(): void
+    # setBackgroundImage(): void
+    # spawnSuperElite(long currentTime): void
+    ' (使用 GameTemplate 默认的 updateDifficulty)
+}
+GameTemplate <|-- NormalGame
+
+class HardGame {
+    # {abstract} setGameParameters(): void
+    # {abstract} spawnEnemies(): void
+    # {abstract} spawnBoss(): void
+    # spawnSuperElite(long currentTime): void
+    # setBackgroundImage(): void
+    # updateDifficulty(): void
+}
+GameTemplate <|-- HardGame
+
+@enduml
